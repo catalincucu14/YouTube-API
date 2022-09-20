@@ -14,9 +14,4 @@ import java.util.List;
 public class LikeController {
     @Autowired
     private LikeService likeService;
-
-    @GetMapping("/api/likes/")
-    public ResponseEntity<List<Like>> readAll() {
-        return new ResponseEntity<>(likeService.getAll(), HttpStatus.OK);
-    }
 }

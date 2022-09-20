@@ -6,22 +6,18 @@ import com.youtube.api.utils.Regex;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "videos")
 public class Video {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_id")
     private Integer videoId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Pattern(regexp = Regex.Title, message = "TITLE Invalid")
+    @Pattern(regexp = Regex.Title, message = "TITLE invalid")
     @NotBlank(message = "TITLE required")
     @Column(name = "title")
     private String title;
@@ -38,12 +34,21 @@ public class Video {
     @Column(name = "upload_date")
     private Date uploadDate = new Date();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "video")
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "video")
+    private Set<Like> likes;
+
     public Video() {
     }
 
-    public Video(Integer videoId, User user, String title, String description, Integer views, Date uploadDate) {
+    public Video(Integer videoId, String title, String description, Integer views, Date uploadDate) {
         this.videoId = videoId;
-        this.user = user;
         this.title = title;
         this.description = description;
         this.views = views;
@@ -56,14 +61,6 @@ public class Video {
 
     public void setVideoId(Integer videoId) {
         this.videoId = videoId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getTitle() {
@@ -96,5 +93,29 @@ public class Video {
 
     public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }

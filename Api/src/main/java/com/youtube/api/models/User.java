@@ -5,37 +5,58 @@ import com.youtube.api.utils.Regex;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer userId;
 
-    @Pattern(regexp = Regex.Mail, message = "MAIL Invalid")
+    @Pattern(regexp = Regex.Name, message = "MAIL invalid")
+    @NotBlank(message = "FIRST NAME required")
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Pattern(regexp = Regex.Name, message = "MAIL invalid")
+    @NotBlank(message = "LAST NAME required")
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Pattern(regexp = Regex.Mail, message = "MAIL invalid")
     @NotBlank(message = "MAIL required")
     @Column(name = "mail")
     private String mail;
 
-    @Pattern(regexp = Regex.Username, message = "USERNAME Invalid")
+    @Pattern(regexp = Regex.Username, message = "USERNAME invalid")
     @NotBlank(message = "USERNAME required")
     @Column(name = "username")
     private String username;
 
+    @Column(name = "password")
+    private String password;
+
     @OneToMany(mappedBy = "user")
-    private List<Video> videos;
+    private Set<Video> videos;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Like> likes;
 
     public User() {
     }
 
-    public User(Integer userId, String mail, String username, List<Video> videos) {
+    public User(Integer userId, String firstName, String lastName, String mail, String username, String password) {
         this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.mail = mail;
         this.username = username;
-        this.videos = videos;
+        this.password = password;
     }
 
     public Integer getUserId() {
@@ -44,6 +65,22 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getMail() {
@@ -62,11 +99,35 @@ public class User {
         this.username = username;
     }
 
-    public List<Video> getVideos() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Video> getVideos() {
         return videos;
     }
 
-    public void setVideos(List<Video> videos) {
+    public void setVideos(Set<Video> videos) {
         this.videos = videos;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
     }
 }

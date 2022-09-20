@@ -8,29 +8,27 @@ import java.util.Date;
 @Table(name = "likes")
 public class Like {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "like_id")
     private Integer likeId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "video_id")
-    private Video video;
 
     @NotBlank(message = "LIKE DATE required")
     @Column(name = "like_date")
     private Date likeDate = new Date();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "video_id", nullable = false)
+    private Video video;
+
     public Like() {
     }
 
-    public Like(Integer likeId, User user, Video video, Date likeDate) {
+    public Like(Integer likeId, Date likeDate) {
         this.likeId = likeId;
-        this.user = user;
-        this.video = video;
         this.likeDate = likeDate;
     }
 
@@ -40,6 +38,14 @@ public class Like {
 
     public void setLikeId(Integer likeId) {
         this.likeId = likeId;
+    }
+
+    public Date getLikeDate() {
+        return likeDate;
+    }
+
+    public void setLikeDate(Date likeDate) {
+        this.likeDate = likeDate;
     }
 
     public User getUser() {
@@ -56,13 +62,5 @@ public class Like {
 
     public void setVideo(Video video) {
         this.video = video;
-    }
-
-    public Date getLikeDate() {
-        return likeDate;
-    }
-
-    public void setLikeDate(Date likeDate) {
-        this.likeDate = likeDate;
     }
 }

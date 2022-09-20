@@ -8,17 +8,9 @@ import java.util.Date;
 @Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Integer commentId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "video_id")
-    private Video video;
 
     @NotBlank(message = "CONTENT required")
     @Column(name = "content")
@@ -28,13 +20,19 @@ public class Comment {
     @Column(name = "post_date")
     private Date postDate = new Date();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "video_id", nullable = false)
+    private Video video;
+
     public Comment() {
     }
 
-    public Comment(Integer commentId, User user, Video video, String content, Date postDate) {
+    public Comment(Integer commentId, String content, Date postDate) {
         this.commentId = commentId;
-        this.user = user;
-        this.video = video;
         this.content = content;
         this.postDate = postDate;
     }
@@ -45,22 +43,6 @@ public class Comment {
 
     public void setCommentId(Integer commentId) {
         this.commentId = commentId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
     }
 
     public String getContent() {
@@ -77,5 +59,21 @@ public class Comment {
 
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
     }
 }
