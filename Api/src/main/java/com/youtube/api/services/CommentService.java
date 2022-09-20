@@ -11,8 +11,4 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
-
-    public List<Comment> getAll() {
-        return commentRepository.findAll();
-    }
 }

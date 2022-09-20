@@ -15,12 +15,14 @@ public class VideoService {
 
 
     public Response<List<Video>> getAll() {
+        // Read the videos
         List<Video> videos = videoRepository.findAll();
 
         return new Response<>(true, videos);
     }
 
     public Response<Video> create(Video video) {
+        // Create the video
         videoRepository.save(video);
 
         return new Response<>(true, video);

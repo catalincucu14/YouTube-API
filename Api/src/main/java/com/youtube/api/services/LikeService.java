@@ -11,8 +11,4 @@ import java.util.List;
 public class LikeService {
     @Autowired
     private LikeRepository likeRepository;
-
-    public List<Like> getAll() {
-        return likeRepository.findAll();
-    }
 }

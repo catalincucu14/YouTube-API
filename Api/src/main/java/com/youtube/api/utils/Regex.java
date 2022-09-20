@@ -1,7 +1,7 @@
 package com.youtube.api.utils;
 
 public class Regex {
-    public static final String Mail = "^(?=^.{5,50}$)(\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+)$";
+    public static final String Mail = "^(?=^.{10,50}$)(\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+)$";
 
     public static final String Name = "^([\\d\\w ,.'\\-()_]*)$";
 
